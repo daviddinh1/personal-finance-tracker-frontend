@@ -49,7 +49,7 @@ export default function RegisterForm() {
     console.log(values);
     try {
       const response = await fetch(
-        "http://localhost:8080/api/v1/auth/register",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/register`,
         {
           method: "POST",
           headers: { "Content-Type": "Application/JSON" },

@@ -16,14 +16,9 @@ import { Button } from "@/components/ui/button";
 
 export const loginSchema = z.object({
   email: z.string().email(),
-  password: z
-    .string()
-    .min(10, {
-      message: "Password is invalid",
-    })
-    .regex(new RegExp(".*[0-9].*"), {
-      message: "Password is invalid",
-    }),
+  password: z.string().min(1, {
+    message: "This field cannot be empty",
+  }),
 });
 
 export default function LoginForm() {
@@ -37,7 +32,7 @@ export default function LoginForm() {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/auth/login", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "Application/JSON" },
         body: JSON.stringify({
@@ -106,7 +101,7 @@ export default function LoginForm() {
             type="submit"
             className="w-full bg-white text-black hover:bg-gray-200 font-bold"
           >
-            Create Account
+            Login
           </Button>
         </form>
       </Form>
