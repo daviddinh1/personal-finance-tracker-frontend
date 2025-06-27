@@ -45,9 +45,32 @@ export default function RegisterForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof registerSchema>) {
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     console.log(values);
-  }
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/auth/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "Application/JSON" },
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorBody = await response.json();
+        throw new Error(errorBody.message || "Login failed");
+      }
+
+      const res = await response.json();
+      console.log("🛠 API response:", res);
+    } catch (error) {
+      console.log("catch register error: ", error);
+    }
+  };
 
   return (
     <div className="bg-black p-8 rounded-lg w-96 border border-gray-600">
