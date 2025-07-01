@@ -140,7 +140,15 @@ export default function TransactionsChart() {
             <TableCell>{transaction.createdAt}</TableCell>
             <TableCell>{transaction.description}</TableCell>
             <TableCell>{transaction.type}</TableCell>
-            <TableCell className="text-right">${transaction.amount}</TableCell>
+            <TableCell
+              className={
+                transaction.type === "INCOME"
+                  ? "text-right text-[#CFFFB1]"
+                  : "text-right text-[#FF5B5B]"
+              }
+            >
+              ${transaction.amount}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
