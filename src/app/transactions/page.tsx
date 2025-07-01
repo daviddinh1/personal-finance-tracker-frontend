@@ -1,10 +1,10 @@
-import { ModeToggle } from "@/components/ModeToggle";
+import Header from "@/components/Header";
 import TransactionsChart from "@/components/TransactionsChart";
 
 export default function Page() {
   return (
-    <div>
-      <ModeToggle />
+    <div className="flex flex-col">
+      <Header />
       <TransactionsChart />
     </div>
   );

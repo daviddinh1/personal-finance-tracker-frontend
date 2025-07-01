@@ -89,6 +89,14 @@ export default function TransactionsChart() {
     return total;
   };
 
+  function formatDate(isoString: string): string {
+    const date = new Date(isoString);
+    const month = date.toLocaleString("en-US", { month: "short" }); // "Jul"
+    const day = date.getDate(); // 1
+    const year = date.getFullYear(); // 2025
+    return `${month}, ${day}, ${year}`; // "Jul, 1, 2025"
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     fetch("http://localhost:8080/api/v1/transactions", {
@@ -137,7 +145,7 @@ export default function TransactionsChart() {
       <TableBody>
         {transactions.map((transaction) => (
           <TableRow key={transaction.id}>
-            <TableCell>{transaction.createdAt}</TableCell>
+            <TableCell>{formatDate(transaction.createdAt)}</TableCell>
             <TableCell>{transaction.description}</TableCell>
             <TableCell>{transaction.type}</TableCell>
             <TableCell
