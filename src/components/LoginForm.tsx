@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export const loginSchema = z.object({
   email: z.string().email(),
@@ -22,6 +23,7 @@ export const loginSchema = z.object({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -32,14 +34,17 @@ export default function LoginForm() {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "Application/JSON" },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "Application/JSON" },
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorBody = await response.json();
@@ -48,6 +53,9 @@ export default function LoginForm() {
 
       const res = await response.json();
       console.log("🛠 API response:", res);
+      localStorage.setItem("token", res.token);
+
+      router.push("/transactions");
     } catch (error) {
       console.log("try block failed error is: ", error);
     }
