@@ -72,7 +72,7 @@ const transactions: TransactionProps[] = [
 export default function TransactionsChart() {
   //need to map across table body for transactions
   return (
-    <Table>
+    <Table className="w-[700px] h-[300px]">
       <TableCaption>A list of your recent transactions.</TableCaption>
       <TableHeader>
         <TableRow>
