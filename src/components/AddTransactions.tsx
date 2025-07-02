@@ -29,7 +29,11 @@ export const transactionSchema = z.object({
   description: z.string(),
 });
 
-export default function AddTransactions() {
+export default function AddTransactions({
+  onSuccess,
+}: {
+  onSuccess: () => void;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
@@ -68,6 +72,7 @@ export default function AddTransactions() {
 
       const res = await response.json();
       console.log("🛠 API response:", res);
+      onSuccess();
       setIsOpen(false);
     } catch (error) {
       console.log("catch register error: ", error);

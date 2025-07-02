@@ -71,7 +71,11 @@ interface TransactionProps {
 //   },
 // ];
 
-export default function TransactionsChart() {
+export default function TransactionsChart({
+  refreshKey,
+}: {
+  refreshKey: number;
+}) {
   //need to map across table body for transactions
   const [transactions, setTransactions] = useState<TransactionProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -122,7 +126,7 @@ export default function TransactionsChart() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [refreshKey]);
 
   if (loading) {
     return <div>Loading Transactions</div>;
