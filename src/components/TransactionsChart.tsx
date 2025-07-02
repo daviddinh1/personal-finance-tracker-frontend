@@ -132,42 +132,44 @@ export default function TransactionsChart() {
   }
 
   return (
-    <Table className="w-[700px] h-[300px]">
-      <TableCaption>A list of your recent transactions.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Date</TableHead>
-          <TableHead>Description</TableHead>
-          <TableHead>Type</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {transactions.map((transaction) => (
-          <TableRow key={transaction.id}>
-            <TableCell>{formatDate(transaction.createdAt)}</TableCell>
-            <TableCell>{transaction.description}</TableCell>
-            <TableCell>{transaction.type}</TableCell>
-            <TableCell
-              className={
-                transaction.type === "INCOME"
-                  ? "text-right text-[#CFFFB1]"
-                  : "text-right text-[#FF5B5B]"
-              }
-            >
-              ${transaction.amount}
+    <div className="mx-auto">
+      <Table className="w-[700px] h-[300px]">
+        <TableCaption>A list of your recent transactions.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Date</TableHead>
+            <TableHead>Description</TableHead>
+            <TableHead>Type</TableHead>
+            <TableHead className="text-right">Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {transactions.map((transaction) => (
+            <TableRow key={transaction.id}>
+              <TableCell>{formatDate(transaction.createdAt)}</TableCell>
+              <TableCell>{transaction.description}</TableCell>
+              <TableCell>{transaction.type}</TableCell>
+              <TableCell
+                className={
+                  transaction.type === "INCOME"
+                    ? "text-right text-[#CFFFB1]"
+                    : "text-right text-[#FF5B5B]"
+                }
+              >
+                ${transaction.amount}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell className="text-right">
+              ${transactionTotal(transactions)}
             </TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">
-            ${transactionTotal(transactions)}
-          </TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+        </TableFooter>
+      </Table>
+    </div>
   );
 }
