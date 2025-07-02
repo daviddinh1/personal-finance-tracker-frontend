@@ -23,6 +23,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 export const transactionSchema = z.object({
   type: z.string(),
   amount: z.coerce.number().nonnegative(),
@@ -121,12 +129,19 @@ export default function AddTransactions({
                         Type
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="Type"
-                          placeholder="Ex. INCOME"
-                          {...field}
-                          className="bg-black border border-gray-600 text-white"
-                        />
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger className="bg-black border border-gray-600 text-white">
+                            <SelectValue placeholder="Select type" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-black text-white border border-gray-600">
+                            <SelectItem value="INCOME">Income</SelectItem>
+                            <SelectItem value="EXPENSE">Expense</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
